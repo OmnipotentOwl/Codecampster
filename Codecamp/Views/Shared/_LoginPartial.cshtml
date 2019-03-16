@@ -1,25 +1,37 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using Codecamp.BusinessLogic
-@inject SignInManager<CodecampUser> SignInManager
-@inject UserManager<CodecampUser> UserManager
-@inject EventBusinessLogic _eventBL
+﻿@using System.Security.Principal;
+@using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+@using Microsoft.Extensions.Options;
 
-@{ 
+@using Codecamp.BusinessLogic;
+@inject EventBusinessLogic _eventBL;
+@inject IOptionsMonitor<AzureADB2COptions> AzureADB2COptions;
+
+@{
+    var options = AzureADB2COptions.Get(AzureADB2CDefaults.AuthenticationScheme);
     var theEvent = await _eventBL.GetActiveEvent();
 }
 
-@if (SignInManager.IsSignedIn(User))
+@if (User.Identity.IsAuthenticated)
 {
-    <form asp-area="Identity" asp-page="/Account/Logout" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right">
+        @if (!string.IsNullOrEmpty(options.EditProfilePolicyId))
+        {
             <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a asp-area="AzureADB2C" asp-controller="Account"
+                   asp-action="EditProfile">
+                    Hello @User.Identity.Name!
+                </a>
             </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
-            </li>
-        </ul>
-    </form>
+        }
+        else
+        {
+            <li class="navbar-text">Hello @User.Identity.Name!</li>
+        }
+        <li>
+            <a asp-area="AzureADB2C" asp-controller="Account"
+               asp-action="SignOut">Sign out</a>
+        </li>
+    </ul>
 }
 else
 {
@@ -34,6 +46,6 @@ else
             // Only show attendee registration when attendee registration is open
             <li><a asp-area="Identity" asp-page="/Account/RegisterAttendee">Register as an Attendee</a></li>
         }
-        <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+        <li><a asp-area="AzureADB2C" asp-controller="Account" asp-action="SignIn">Sign In</a></li>
     </ul>
 }

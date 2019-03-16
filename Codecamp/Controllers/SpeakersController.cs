@@ -19,20 +19,20 @@ namespace Codecamp.Controllers
     public class SpeakersController : Controller
     {
         private readonly CodecampDbContext _context;
-        private readonly UserManager<CodecampUser> _userManager;
+        //private readonly UserManager<CodecampUser> _userManager;
         private readonly ISpeakerBusinessLogic _speakerBL;
         private readonly IUserBusinessLogic _userBL;
 
         private SpeakerViewModel Speaker { get; set; }
 
         public SpeakersController(
-            UserManager<CodecampUser> userManager,
+            //UserManager<CodecampUser> userManager,
             CodecampDbContext context,
             ISpeakerBusinessLogic speakerBL,
             IUserBusinessLogic userBL)
         {
             _context = context;
-            _userManager = userManager;
+            //_userManager = userManager;
             _speakerBL = speakerBL;
             _userBL = userBL;
         }

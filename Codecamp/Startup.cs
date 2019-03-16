@@ -3,6 +3,8 @@ using Codecamp.BusinessLogic.Api;
 using Codecamp.Data;
 using Codecamp.Models;
 using Codecamp.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,22 +41,25 @@ namespace Codecamp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
+                .AddAzureADB2C(options => Configuration.Bind("AzureADB2C", options));
+
             services.AddDbContext<CodecampDbContext>(options =>
                 // options.UseSqlServer(Configuration.GetConnectionString("ProductionDbContextConnection")));
                 options.UseSqlServer(Configuration.GetConnectionString("CodecampDbContextConnection")));
 
-            services.AddIdentity<CodecampUser, IdentityRole>()
-                .AddEntityFrameworkStores<CodecampDbContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<CodecampUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<CodecampDbContext>()
+            //    .AddDefaultTokenProviders();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddRazorPagesOptions(options =>
-                {
-                    options.AllowAreas = true;
-                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-                })
+                //.AddRazorPagesOptions(options =>
+                //{
+                //    options.AllowAreas = true;
+                //    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                //    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                //})
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
@@ -63,12 +68,12 @@ namespace Codecamp
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = $"/Identity/Account/Login";
-                options.LogoutPath = $"/Identity/Account/Logout";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = $"/Identity/Account/Login";
+            //    options.LogoutPath = $"/Identity/Account/Logout";
+            //    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            //});
 
             services.AddSingleton<IEmailSender, AuthMessageEmailSender>();
 
@@ -97,11 +102,18 @@ namespace Codecamp
             services.AddTransient<EventBusinessLogic>();
 
             services.Configure<AppOptions>(Configuration.GetSection("AppSettings"));
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+            //    options.AddPolicy("RequireSpeakerRole", policy => policy.RequireRole("Speaker"));
+            //    options.AddPolicy("RequireVolunteerRole", policy => policy.RequireRole("Volunteer"));
+            //});
+
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("RequireSpeakerRole", policy => policy.RequireRole("Speaker"));
-                options.AddPolicy("RequireVolunteerRole", policy => policy.RequireRole("Volunteer"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim("Role", "Admin"));
+                options.AddPolicy("Speaker", policy => policy.RequireClaim("Role", "Speaker"));
+                options.AddPolicy("Volunteer", policy => policy.RequireClaim("Role", "Volunteer"));
             });
 
             services.AddSession();
@@ -177,7 +189,7 @@ namespace Codecamp
             });
 
             // Create user roles and admin user
-            CreateRoles(serviceProvider).Wait();
+            //CreateRoles(serviceProvider).Wait();
         }
 
         private async Task CreateRoles(IServiceProvider serviceProvider)

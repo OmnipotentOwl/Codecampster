@@ -23,7 +23,7 @@ namespace Codecamp.Controllers
     public class HomeController : Controller
     {
         private readonly CodecampDbContext _context;
-        private readonly UserManager<CodecampUser> _userManager;
+        //private readonly UserManager<CodecampUser> _userManager;
         private readonly IEventBusinessLogic _eventBL;
         private readonly IAnnouncementBusinessLogic _announcementBL;
         private readonly ISponsorBusinessLogic _sponsorBL;
@@ -31,13 +31,13 @@ namespace Codecamp.Controllers
 
         public HomeController(
             CodecampDbContext context,
-            UserManager<CodecampUser> userManager,
+            //UserManager<CodecampUser> userManager,
             IEventBusinessLogic eventBL,
             IAnnouncementBusinessLogic announcementBL,
             ISponsorBusinessLogic sponsorBL)
         {
             _context = context;
-            _userManager = userManager;
+            //_userManager = userManager;
             _eventBL = eventBL;
             _announcementBL = announcementBL;
             _sponsorBL = sponsorBL;
