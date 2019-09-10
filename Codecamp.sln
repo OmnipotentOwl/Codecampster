@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29230.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResizeCodecampSpeakerImages", "ResizeCodecampSpeakerImages\ResizeCodecampSpeakerImages.csproj", "{DC1F49C7-0969-4542-8E02-70ADAFBFA272}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3FD1E9AE-E8CE-4DED-99AC-F62E2141C6D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{FB06BA5D-D992-4312-8555-414BA7A6C07C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{84F3BF1B-4591-4A65-A381-AC86453611BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codecamp.Web", "Codecamp.Web\Codecamp.Web.csproj", "{65E3F052-F989-4C6F-9191-44CA1496630F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BF9A7B8E-453C-493A-AC02-0066F8E29E5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{6550B9B2-ED40-4016-8034-D7745B61CC10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResizeCodecampSpeakerImages", "tools\ResizeCodecampSpeakerImages\ResizeCodecampSpeakerImages.csproj", "{6CA508A1-D2F2-4033-A351-E85C962FA287}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codecamp.Web", "src\Codecamp.Web\Codecamp.Web.csproj", "{9B2087DE-9532-4257-99CC-CBFF7B6E7666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +23,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DC1F49C7-0969-4542-8E02-70ADAFBFA272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC1F49C7-0969-4542-8E02-70ADAFBFA272}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC1F49C7-0969-4542-8E02-70ADAFBFA272}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC1F49C7-0969-4542-8E02-70ADAFBFA272}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65E3F052-F989-4C6F-9191-44CA1496630F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65E3F052-F989-4C6F-9191-44CA1496630F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65E3F052-F989-4C6F-9191-44CA1496630F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65E3F052-F989-4C6F-9191-44CA1496630F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CA508A1-D2F2-4033-A351-E85C962FA287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CA508A1-D2F2-4033-A351-E85C962FA287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CA508A1-D2F2-4033-A351-E85C962FA287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CA508A1-D2F2-4033-A351-E85C962FA287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B2087DE-9532-4257-99CC-CBFF7B6E7666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B2087DE-9532-4257-99CC-CBFF7B6E7666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B2087DE-9532-4257-99CC-CBFF7B6E7666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B2087DE-9532-4257-99CC-CBFF7B6E7666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,7 +38,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FB06BA5D-D992-4312-8555-414BA7A6C07C} = {3FD1E9AE-E8CE-4DED-99AC-F62E2141C6D0}
 		{84F3BF1B-4591-4A65-A381-AC86453611BE} = {3FD1E9AE-E8CE-4DED-99AC-F62E2141C6D0}
-		{65E3F052-F989-4C6F-9191-44CA1496630F} = {FB06BA5D-D992-4312-8555-414BA7A6C07C}
+		{6CA508A1-D2F2-4033-A351-E85C962FA287} = {6550B9B2-ED40-4016-8034-D7745B61CC10}
+		{9B2087DE-9532-4257-99CC-CBFF7B6E7666} = {FB06BA5D-D992-4312-8555-414BA7A6C07C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {415F33E8-2E62-4089-84A9-833B4AE6C168}
