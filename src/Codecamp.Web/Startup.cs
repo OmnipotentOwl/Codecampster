@@ -77,7 +77,7 @@ namespace Codecamp
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
-            services.AddSingleton<IEmailSender, AuthMessageEmailSender>();
+            services.AddTransient<IEmailSender, AuthMessageEmailSender>();
 
             services.AddTransient<ISpeakerBusinessLogic, SpeakerBusinessLogic>();
             services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
