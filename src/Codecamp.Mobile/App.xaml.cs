@@ -15,11 +15,20 @@ namespace Codecamp.Mobile
 
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
+
+            const string AppCenteriOS = "APPCENTER_IOS";
+            const string AppCenterAndroid = "APPCENTER_ANDROID";
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+#if !DEBUG
+            AppCenter.Start($"ios={AppCenteriOS};" +
+                $"android={AppCenterAndroid};", 
+                typeof(Analytics), 
+                typeof(Crashes),
+                typeof(Distribute));
+#endif
         }
 
         protected override void OnSleep()

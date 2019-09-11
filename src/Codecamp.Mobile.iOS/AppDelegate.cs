@@ -4,6 +4,8 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace Codecamp.Mobile.iOS
 {
@@ -11,7 +13,7 @@ namespace Codecamp.Mobile.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : FormsApplicationDelegate
     {
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -22,11 +24,18 @@ namespace Codecamp.Mobile.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
-            global::Xamarin.Forms.Forms.Init();
+            Forms.SetFlags("CollectionView_Experimental");
+            Forms.Init();
+            FormsMaterial.Init();
+
+            Shiny.iOSShinyHost.Init(new Startup());
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }
+
+        public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
+            => Shiny.Jobs.JobManager.OnBackgroundFetch(completionHandler);
     }
 }
