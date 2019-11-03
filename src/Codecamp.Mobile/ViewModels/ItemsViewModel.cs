@@ -2,15 +2,13 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
+using Codecamp.Mobile.Clients.Portable.Models;
+using Codecamp.Mobile.Clients.Portable.Views;
 using Xamarin.Forms;
 
-using Codecamp.Mobile.Models;
-using Codecamp.Mobile.Views;
-
-namespace Codecamp.Mobile.ViewModels
+namespace Codecamp.Mobile.Clients.Portable.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class ItemsViewModel : ViewModelBase
     {
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }

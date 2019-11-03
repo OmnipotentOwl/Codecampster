@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Shiny.Jobs;
 
-namespace Codecamp.Mobile.Services
+namespace Codecamp.Mobile.Clients.Portable.Services
 {
     public class BackgroundRefreshJob : IJob
     {

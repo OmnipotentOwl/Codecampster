@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Codecamp.Mobile.Clients.Portable.Services;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using Codecamp.Mobile.Services;
-using Codecamp.Mobile.Views;
 
-namespace Codecamp.Mobile
+namespace Codecamp.Mobile.Clients.Portable
 {
     public partial class App : Application
     {

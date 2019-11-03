@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Codecamp.Mobile.Services
+namespace Codecamp.Mobile.Clients.Portable.Services
 {
     public interface IDataStore<T>
     {

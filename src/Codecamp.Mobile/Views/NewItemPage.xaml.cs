@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using Codecamp.Mobile.Clients.Portable.Models;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-using Codecamp.Mobile.Models;
-
-namespace Codecamp.Mobile.Views
+namespace Codecamp.Mobile.Clients.Portable.Views
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer

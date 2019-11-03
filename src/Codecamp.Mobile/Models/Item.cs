@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Codecamp.Mobile.Models
+﻿namespace Codecamp.Mobile.Clients.Portable.Models
 {
     public class Item
     {

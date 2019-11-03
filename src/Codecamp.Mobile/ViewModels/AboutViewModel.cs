@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows.Input;
-
 using Xamarin.Forms;
 
-namespace Codecamp.Mobile.ViewModels
+namespace Codecamp.Mobile.Clients.Portable.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class AboutViewModel : ViewModelBase
     {
         public AboutViewModel()
         {

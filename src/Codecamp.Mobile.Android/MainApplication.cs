@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Runtime;
 using Codecamp.Mobile;
+using Codecamp.Mobile.Clients.Portable;
 
 namespace Codecamp.Mobile.Droid
 {

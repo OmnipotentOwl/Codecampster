@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Codecamp.Mobile.Clients.Portable;
+using Codecamp.Mobile.Services.Abstractions.Azure;
 using Foundation;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Client;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -28,14 +32,23 @@ namespace Codecamp.Mobile.iOS
             Forms.Init();
             FormsMaterial.Init();
 
-            Shiny.iOSShinyHost.Init(new Startup());
+            Startup.Init(ConfigureServices);
 
-            LoadApplication(new App());
+            LoadApplication(new Clients.Portable.App());
 
             return base.FinishedLaunching(app, options);
         }
 
-        public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
-            => Shiny.Jobs.JobManager.OnBackgroundFetch(completionHandler);
+        void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
+        {
+            //services.AddSingleton<IPlatformAuthBuilder, PlatformAuthBuilder>();
+        }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
+            return true;
+        }
+
     }
 }

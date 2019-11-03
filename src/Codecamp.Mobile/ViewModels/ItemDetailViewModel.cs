@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Codecamp.Mobile.Clients.Portable.Models;
 
-using Codecamp.Mobile.Models;
-
-namespace Codecamp.Mobile.ViewModels
+namespace Codecamp.Mobile.Clients.Portable.ViewModels
 {
-    public class ItemDetailViewModel : BaseViewModel
+    public class ItemDetailViewModel : ViewModelBase
     {
         public Item Item { get; set; }
         public ItemDetailViewModel(Item item = null)

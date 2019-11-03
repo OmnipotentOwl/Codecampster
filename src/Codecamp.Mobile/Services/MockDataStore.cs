@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Codecamp.Mobile.Models;
+using Codecamp.Mobile.Clients.Portable.Models;
 
-namespace Codecamp.Mobile.Services
+namespace Codecamp.Mobile.Clients.Portable.Services
 {
     public class MockDataStore : IDataStore<Item>
     {

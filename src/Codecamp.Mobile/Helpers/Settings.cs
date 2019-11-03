@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Codecamp.Mobile.Helpers
+﻿namespace Codecamp.Mobile.Clients.Portable.Helpers
 {
     public static class Settings
     {

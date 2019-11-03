@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Xamarin.Forms;
-
-namespace Codecamp.Mobile
+﻿namespace Codecamp.Mobile.Clients.Portable
 {
     public partial class AppShell : Xamarin.Forms.Shell
     {
