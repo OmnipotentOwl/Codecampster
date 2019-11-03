@@ -1,0 +1,86 @@
+
+variables:
+  BuildConfiguration: 'Release'
+
+jobs: 
+- job: build_ios
+  displayName: iOS Agent Job
+  pool:
+    name: Azure Pipelines
+    vmImage: macOS-10.14
+    demands:
+    - xcode
+    - Xamarin.iOS
+  steps:
+    - task: UseDotNet@2
+      displayName: 'Use .Net Core sdk 2.2.x'
+      inputs:
+        version: 2.2.x
+        includePreviewVersions: true
+    - bash: |
+        # Write your commands here
+        
+        sed -i '' "s/APPCENTER_IOS/$APPCENTER_IOS/g" $APP_DIRECTORY/src/Codecamp.Mobile/App.xaml.cs
+      displayName: 'Update App Center iOS Variables'
+      env:
+        APPCENTER_IOS: $(APPCENTER_IOS)
+        APP_DIRECTORY: $(Build.Repository.LocalPath)
+
+    - task: vs-publisher-473885.motz-mobile-buildtasks.ios-bundle-version.ios-bundle-version@1
+      displayName: 'Bump iOS Versions'
+      inputs:
+        sourcePath: src/Codecamp.Mobile.iOS/Info.plist
+        versionCodeOffset: 0
+        printFile: false
+
+    - task: InstallAppleProvisioningProfile@1
+      displayName: 'Install an Apple provisioning profile'
+      inputs:
+        provProfileSecureFile: '291b8399-1fb4-44f3-a048-01baa250d36d'
+
+    - task: InstallAppleCertificate@2
+      displayName: 'Install an Apple certificate'
+      inputs:
+        certSecureFile: '3c1f66e8-5bbd-49f4-b970-ed471c78bf96'
+        certPwd: '$(P12Password)'
+
+    - task: NuGetToolInstaller@0
+      displayName: 'Use NuGet 4.9.3'
+      inputs:
+        versionSpec: 4.9.3
+
+    - task: pjcollins.azp-utilities-boots.boots.Boots@1
+      displayName: 'Install Mono 6.0'
+      inputs:
+        uri: 'https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg'
+
+    - task: pjcollins.azp-utilities-boots.boots.Boots@1
+      displayName: 'Install iOS 16.2'
+      inputs:
+        uri: 'https://bosstoragemirror.blob.core.windows.net/wrench/jenkins/xcode10.3/72cb587a39c12dfaa20cd5a0b1eb60a908ff88a6/1/package/xamarin.ios-12.14.0.113.pkg'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: '$(Parameters.restorePkgSolution)'
+
+    - task: XamariniOS@2
+      displayName: 'Build iOS App'
+      inputs:
+        solutionFile: src/Codecamp.Mobile.iOS.sln
+        configuration: '$(BuildConfiguration)'
+        runNugetRestore: true
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+      inputs:
+        SourceFolder: '$(system.defaultworkingdirectory)'
+        Contents: |
+          **/*.ipa
+          **/*.dSYM
+          TargetFolder: '$(build.artifactstagingdirectory)'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: 'drop-ios'

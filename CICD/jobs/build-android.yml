@@ -1,0 +1,61 @@
+
+variables:
+  BuildConfiguration: 'Release'
+
+jobs: 
+- job: build_android
+  displayName: Android Agent Job
+  pool:
+    name: Azure Pipelines
+    vmImage: macOS-10.14
+    demands:
+    - MSBuild
+    - Xamarin.Android
+    - JDK
+  steps:
+    - bash: |
+        # Write your commands here
+        
+        sed -i '' "s/APPCENTER_ANDROID/$APPCENTER_ANDROID/g" $APP_DIRECTORY/src/Codecamp.Mobile/App.xaml.cs
+      displayName: 'Update App Center Android Variable'
+      env:
+        APPCENTER_ANDROID: $(APPCENTER_ANDROID)
+        APP_DIRECTORY: $(Build.Repository.LocalPath)
+    - task: vs-publisher-473885.motz-mobile-buildtasks.android-manifest-version.android-manifest-version@1
+      displayName: 'Bump Android Versions'
+      inputs:
+        sourcePath: src/Codecamp.Mobile.Android/Properties/AndroidManifest.xml
+        printFile: false
+    - task: NuGetToolInstaller@0
+      displayName: 'Use NuGet 4.9.3'
+      inputs:
+        versionSpec: 4.9.3
+    - task: pjcollins.azp-utilities-boots.boots.Boots@1
+      displayName: 'Install Mono 6.4'
+      inputs:
+        uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.187.macos10.xamarin.universal.pkg'
+    - task: pjcollins.azp-utilities-boots.boots.Boots@1
+      displayName: 'Install Android 16.3'
+      inputs:
+        uri: 'https://aka.ms/xamarin-android-commercial-d16-3-macos'
+    - task: XamarinAndroid@1
+      displayName: 'Build Android App'
+      inputs:
+        projectFile: src/Codecamp.Mobile.Android/Codecamp.Mobile.Android.csproj
+        outputDirectory: '$(build.binariesdirectory)/$(BuildConfiguration)'
+        configuration: '$(BuildConfiguration)'
+        msbuildArguments: /restore
+      continueOnError: true
+    - task: AndroidSigning@3
+      displayName: 'Signing and aligning APK file'
+      inputs:
+        apkFiles: '$(Parameters.appFiles)'
+        apksignerKeystoreFile: '220840c8-f1b6-4add-bd15-8c92aba2d0ca'
+        apksignerKeystorePassword: '$(KeystorePassword)'
+        apksignerKeystoreAlias: '$(KeystoreAlias)'
+        apksignerKeyPassword: '$(KeystorePassword)'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop-android'
+      inputs:
+        PathtoPublish: '$(build.binariesdirectory)/$(BuildConfiguration)'
+        ArtifactName: 'drop-android'
